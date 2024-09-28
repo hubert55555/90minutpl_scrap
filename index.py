@@ -95,4 +95,26 @@ with open('statystyki_klubow.txt', 'w', encoding='utf-8') as f:
         f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['stracone_wyjazd'])) + "\n")
 
 os.remove("dane.csv")
-print("Statystyki klubów zostały zapisane do pliku 'statystyki_klubow.txt'.")
+
+
+def edit_file(file_path):
+    try:
+        # Otwieramy plik w trybie odczytu
+        with open(file_path, 'r', encoding='utf-8') as file:
+            content = file.read()
+
+        # Usuwamy apostrofy oraz nawiasy kwadratowe
+        content = content.replace("'", "").replace("[", "").replace("]", "")
+
+        # Otwieramy plik w trybie zapisu
+        with open(file_path, 'w', encoding='utf-8') as file:
+            file.write(content)
+
+        print(f"Plik '{file_path}' został zaktualizowany.")
+
+    except FileNotFoundError:
+        print(f"Plik '{file_path}' nie został znaleziony.")
+    except Exception as e:
+        print(f"Wystąpił błąd: {e}")
+
+edit_file('statystyki_klubow.txt')
