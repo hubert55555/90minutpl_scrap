@@ -32,12 +32,15 @@ with open(nazwaPliku, mode='w', newline='', encoding='utf-8') as file:
     writer.writerows(dane)
 
 tabela = []
+nazwyKlubow = []
 
 with open(nazwaPliku, newline='', encoding='utf-8') as plik_csv:
     czytnik_csv = csv.reader(plik_csv, delimiter=';')
     for wiersz in czytnik_csv:
         wiersz_bez_drugiej_kolumny = wiersz[:1] + wiersz[2:]
+        drugiWiersz = wiersz[1:2]
         tabela.append(wiersz_bez_drugiej_kolumny)
+        nazwyKlubow.append(drugiWiersz)
 
 driver.quit()
 
@@ -73,19 +76,23 @@ for row_idx in range(1, len(tabela)):
             kluby_statystyki[klub_gosc]['strzelone_wyjazd'].append(bramki_goscia)
             kluby_statystyki[klub_gosc]['stracone_wyjazd'].append(bramki_gospodarza)
 
-os.remove("statystyki_klubow.txt")
+try:
+    os.remove("statystyki_klubow.txt")
+except:
+    print('')
+
 
 # Zapisywanie wyników do pliku
-with open('statystyki_klubow.txt', 'w') as f:
+with open('statystyki_klubow.txt', 'w', encoding='utf-8') as f:
     for klub, stats in kluby_statystyki.items():
         # Zapis strzelonych bramek jako gospodarza
-        f.write(f"{klub}, " + ", ".join(map(str, stats['strzelone_gospodarz'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['strzelone_gospodarz'])) + "\n")
         # Zapis straconych bramek jako gospodarza
-        f.write(f"{klub}, " + ", ".join(map(str, stats['stracone_gospodarz'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['stracone_gospodarz'])) + "\n")
         # Zapis strzelonych bramek na wyjeździe
-        f.write(f"{klub}, " + ", ".join(map(str, stats['strzelone_wyjazd'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['strzelone_wyjazd'])) + "\n")
         # Zapis straconych bramek na wyjeździe
-        f.write(f"{klub}, " + ", ".join(map(str, stats['stracone_wyjazd'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['stracone_wyjazd'])) + "\n")
 
 os.remove("dane.csv")
 print("Statystyki klubów zostały zapisane do pliku 'statystyki_klubow.txt'.")
