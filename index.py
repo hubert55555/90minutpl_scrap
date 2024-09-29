@@ -77,22 +77,22 @@ for row_idx in range(1, len(tabela)):
             kluby_statystyki[klub_gosc]['stracone_wyjazd'].append(bramki_gospodarza)
 
 try:
-    os.remove("statystyki_klubow.txt")
+    os.remove("statystyki_klubow.csv")
 except:
     print('')
 
 
 # Zapisywanie wyników do pliku
-with open('statystyki_klubow.txt', 'w', encoding='utf-8') as f:
+with open('statystyki_klubow.csv', 'w', encoding='utf-8') as f:
     for klub, stats in kluby_statystyki.items():
         # Zapis strzelonych bramek jako gospodarza
-        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['strzelone_gospodarz'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, A" + ", ".join(map(str, stats['strzelone_gospodarz'])) + "\n")
         # Zapis straconych bramek jako gospodarza
-        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['stracone_gospodarz'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, B" + ", ".join(map(str, stats['stracone_gospodarz'])) + "\n")
         # Zapis strzelonych bramek na wyjeździe
-        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['strzelone_wyjazd'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, C" + ", ".join(map(str, stats['strzelone_wyjazd'])) + "\n")
         # Zapis straconych bramek na wyjeździe
-        f.write(f"{nazwyKlubow[klub]}, " + ", ".join(map(str, stats['stracone_wyjazd'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, D" + ", ".join(map(str, stats['stracone_wyjazd'])) + "\n")
 
 os.remove("dane.csv")
 
@@ -117,4 +117,4 @@ def edit_file(file_path):
     except Exception as e:
         print(f"Wystąpił błąd: {e}")
 
-edit_file('statystyki_klubow.txt')
+edit_file('statystyki_klubow.csv')
