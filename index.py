@@ -86,13 +86,13 @@ except:
 with open('statystyki_klubow.csv', 'w', encoding='utf-8') as f:
     for klub, stats in kluby_statystyki.items():
         # Zapis strzelonych bramek jako gospodarza
-        f.write(f"{nazwyKlubow[klub]}, A" + ", ".join(map(str, stats['strzelone_gospodarz'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, A, " + ", ".join(map(str, stats['strzelone_gospodarz'])) + "\n")
         # Zapis straconych bramek jako gospodarza
-        f.write(f"{nazwyKlubow[klub]}, B" + ", ".join(map(str, stats['stracone_gospodarz'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, B, " + ", ".join(map(str, stats['stracone_gospodarz'])) + "\n")
         # Zapis strzelonych bramek na wyjeździe
-        f.write(f"{nazwyKlubow[klub]}, C" + ", ".join(map(str, stats['strzelone_wyjazd'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, C, " + ", ".join(map(str, stats['strzelone_wyjazd'])) + "\n")
         # Zapis straconych bramek na wyjeździe
-        f.write(f"{nazwyKlubow[klub]}, D" + ", ".join(map(str, stats['stracone_wyjazd'])) + "\n")
+        f.write(f"{nazwyKlubow[klub]}, D, " + ", ".join(map(str, stats['stracone_wyjazd'])) + "\n")
 
 os.remove("dane.csv")
 
@@ -118,3 +118,13 @@ def edit_file(file_path):
         print(f"Wystąpił błąd: {e}")
 
 edit_file('statystyki_klubow.csv')
+
+nazwa_pliku = 'statystyki_klubow.csv'
+
+with open(nazwa_pliku, 'r', encoding='utf-8') as plik:
+    linie = plik.readlines()
+
+linie.sort()
+
+with open(nazwa_pliku, 'w', encoding='utf-8') as plik:
+    plik.writelines(linie)
